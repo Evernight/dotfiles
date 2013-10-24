@@ -1,96 +1,90 @@
-" Make Vim more useful
+" colors
+set t_Co=256
+colorscheme wombat256my
+"colorscheme desert256
+"colorscheme distinguished
+
+" Bundles {{{
 set nocompatible
-" Use the OS clipboard by default (on versions compiled with `+clipboard`)
-set clipboard=unnamed
-" Enhance command-line completion
-set wildmenu
-" Allow cursor keys in insert mode
-set esckeys
-" Allow backspace in insert mode
+filetype off
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+Bundle 'gmarik/vundle'
+Bundle 'scrooloose/nerdtree'
+Bundle 'fugitive.vim'
+Bundle 'Lokaltog/vim-powerline'
+Bundle 'mileszs/ack.vim'
+Bundle 'Shougo/vimproc'
+Bundle 'Shougo/vimshell'
+Bundle 'tpope/vim-commentary'
+Bundle 'altercation/vim-colors-solarized'
+
+Bundle 'ervandew/supertab'
+
+Bundle 'lukerandall/haskellmode-vim'
+Bundle 'eagletmt/ghcmod-vim'
+Bundle 'ujihisa/neco-ghc'
+Bundle 'Shougo/neocomplcache'
+
+filetype plugin indent on
+" }}}
+
+" Powerline
+set nocompatible   " Disable vi-compatibility
+set laststatus=2   " Always show the statusline
+set encoding=utf-8 " Necessary to show Unicode glyphs
+let g:Powerline_symbols = 'fancy'
+
+" I have no idea what is this
+let g:miniBufExplMapWindowNavVim = 1
+let g:miniBufExplMapWindowNavArrows = 1
+let g:miniBufExplMapCTabSwitchBufs = 1
+let g:miniBufExplModSelTarget = 1
+
+map T :TaskList<CR>
+"map P :TlistToggle<CR>
+
+" <Ctrl-l> redraws the screen and removes any search highlighting.
+nnoremap <silent> <C-l> :nohl<CR><C-l>
+
+" Remap code completion to Ctrl+Space {{{2
+inoremap <Nul> <C-x><C-o> 
+inoremap <Nul> <C-n>
+
+" configure expanding of tabs for various file types
+au BufRead,BufNewFile *.py set expandtab
+au BufRead,BufNewFile *.c set noexpandtab
+au BufRead,BufNewFile *.h set noexpandtab
+au BufRead,BufNewFile Makefile* set noexpandtab
+
+" --------------------------------------------------------------------------------
+" configure editor with tabs and nice stuff...
+" --------------------------------------------------------------------------------
+set expandtab           " enter spaces when tab is pressed
+set textwidth=120       " break lines when line length increases
+set tabstop=4           " use 4 spaces to represent tab
+set softtabstop=4
+set shiftwidth=4        " number of spaces to use for auto indent
+set autoindent          " copy indent from current line when starting a new line
+
+" make backspaces more powerfull
 set backspace=indent,eol,start
-" Optimize for fast terminal connections
-set ttyfast
-" Add the g flag to search/replace by default
-set gdefault
-" Use UTF-8 without BOM
-set encoding=utf-8 nobomb
-" Change mapleader
-let mapleader=","
-" Don’t add empty newlines at the end of files
-set binary
-set noeol
-" Centralize backups, swapfiles and undo history
-set backupdir=~/.vim/backups
-set directory=~/.vim/swaps
-if exists("&undodir")
-	set undodir=~/.vim/undo
-endif
 
-" Respect modeline in files
-set modeline
-set modelines=4
-" Enable per-directory .vimrc files and disable unsafe commands in them
-set exrc
-set secure
-" Enable line numbers
-set number
-" Enable syntax highlighting
-syntax on
-" Highlight current line
-set cursorline
-" Make tabs as wide as two spaces
-set tabstop=2
-" Show “invisible” characters
-set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
-set list
-" Highlight searches
-set hlsearch
-" Ignore case of searches
-set ignorecase
-" Highlight dynamically as pattern is typed
-set incsearch
-" Always show status line
-set laststatus=2
-" Enable mouse in all modes
-set mouse=a
-" Disable error bells
-set noerrorbells
-" Don’t reset cursor to start of line when moving around.
-set nostartofline
-" Show the cursor position
-set ruler
-" Don’t show the intro message when starting Vim
-set shortmess=atI
-" Show the current mode
-set showmode
-" Show the filename in the window titlebar
-set title
-" Show the (partial) command as it’s being typed
-set showcmd
-" Use relative line numbers
-if exists("&relativenumber")
-	set relativenumber
-	au BufReadPost * set relativenumber
-endif
-" Start scrolling three lines before the horizontal window border
-set scrolloff=3
+set ruler                       " show line and column number
+syntax on                       " syntax highlighting
+set showcmd                     " show (partial) command in status line
+set number                      " line numbers
+set hlsearch                    " highlight search items
 
-" Strip trailing whitespace (,ss)
-function! StripWhitespace()
-	let save_cursor = getpos(".")
-	let old_query = getreg('/')
-	:%s/\s\+$//e
-	call setpos('.', save_cursor)
-	call setreg('/', old_query)
-endfunction
-noremap <leader>ss :call StripWhitespace()<CR>
-" Save a file as root (,W)
-noremap <leader>W :w !sudo tee % > /dev/null<CR>
+filetype on
 
-" Automatic commands
-if has("autocmd")
-	" Enable file type detection
-	filetype on
-	" Treat .json files as .js
-	autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
-endif
+"" Highlight long linex
+"highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+"match OverLength /\%81v.\+/
+
+" --------------------------------------------------------------------------------
+"" File specific
+" --------------------------------------------------------------------------------
+au BufRead,BufNewFile *.php set expandtab
+au BufRead,BufNewFile *.php set shiftwidth=2
