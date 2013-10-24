@@ -20,7 +20,8 @@ Bundle 'Shougo/vimshell'
 Bundle 'tpope/vim-commentary'
 Bundle 'altercation/vim-colors-solarized'
 
-Bundle 'ervandew/supertab'
+"Bundle 'ervandew/supertab'
+Bundle 'Valloric/YouCompleteMe'
 
 Bundle 'lukerandall/haskellmode-vim'
 Bundle 'eagletmt/ghcmod-vim'
