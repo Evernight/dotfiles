@@ -19,14 +19,16 @@ Bundle 'Shougo/vimproc'
 Bundle 'Shougo/vimshell'
 Bundle 'tpope/vim-commentary'
 Bundle 'altercation/vim-colors-solarized'
+Bundle 'L9'
+Bundle 'FuzzyFinder'
 
 "Bundle 'ervandew/supertab'
 Bundle 'Valloric/YouCompleteMe'
 
-Bundle 'lukerandall/haskellmode-vim'
-Bundle 'eagletmt/ghcmod-vim'
-Bundle 'ujihisa/neco-ghc'
-Bundle 'Shougo/neocomplcache'
+"Bundle 'lukerandall/haskellmode-vim'
+"Bundle 'eagletmt/ghcmod-vim'
+"Bundle 'ujihisa/neco-ghc'
+"Bundle 'Shougo/neocomplcache'
 
 filetype plugin indent on
 " }}}
@@ -43,7 +45,8 @@ let g:miniBufExplMapWindowNavArrows = 1
 let g:miniBufExplMapCTabSwitchBufs = 1
 let g:miniBufExplModSelTarget = 1
 
-map T :TaskList<CR>
+" TODO: do I need these?
+"map T :TaskList<CR>
 "map P :TlistToggle<CR>
 
 " <Ctrl-l> redraws the screen and removes any search highlighting.
@@ -60,7 +63,7 @@ au BufRead,BufNewFile *.h set noexpandtab
 au BufRead,BufNewFile Makefile* set noexpandtab
 
 " --------------------------------------------------------------------------------
-" configure editor with tabs and nice stuff...
+" configure editor with tabs and nice stuff
 " --------------------------------------------------------------------------------
 set expandtab           " enter spaces when tab is pressed
 set textwidth=120       " break lines when line length increases
@@ -69,16 +72,16 @@ set softtabstop=4
 set shiftwidth=4        " number of spaces to use for auto indent
 set autoindent          " copy indent from current line when starting a new line
 
-" make backspaces more powerfull
+" make backspaces more powerful
 set backspace=indent,eol,start
 
 set ruler                       " show line and column number
-syntax on                       " syntax highlighting
 set showcmd                     " show (partial) command in status line
 set number                      " line numbers
 set hlsearch                    " highlight search items
 
-filetype on
+syntax on                       " syntax highlighting
+filetype on                     " filetype detection
 
 "" Highlight long linex
 "highlight OverLength ctermbg=red ctermfg=white guibg=#592929
