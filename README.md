@@ -1,4 +1,4 @@
-# Mathias’s dotfiles
+# Evernight's dotfiles (forked from Mathias’s dotfiles)
 
 ## Installation
 
