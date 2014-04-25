@@ -31,6 +31,7 @@ if [[ 1 ]]; then
     "31" # error color
     "1;34" # path color
     "1;30" # time color
+    "36" # vcs color
   )
 
   #if [[ "$SSH_TTY" ]]; then
@@ -44,6 +45,12 @@ fi
 
 # Inside a prompt function, run this alias to setup local $c0-$c9 color vars.
 alias prompt_getcolors='prompt_colors[9]=; local i; for i in ${!prompt_colors[@]}; do local c$i="\[\e[0;${prompt_colors[$i]}m\]"; done'
+
+function set_sep() {
+  prompt_getcolors
+  sep="$c4>"
+}
+set_sep
 
 # Exit code of previous command.
 function prompt_exitcode() {
@@ -68,9 +75,9 @@ function prompt_git() {
       END {print r}'
   )"
   if [[ "$flags" ]]; then
-    output="$output$c1:$c0$flags"
+    output="$c5$output $flags"
   fi
-  echo "$c1[$c0$output$c1]$c9"
+  echo "$sep $c0$output $c9"
 }
 
 # hg status.
@@ -91,7 +98,7 @@ function prompt_hg() {
   if [[ "$flags" ]]; then
     output="$output$c1:$c0$flags"
   fi
-  echo "$c1[$c0$output$c1]$c9"
+  echo "$c0$output $sep $c9"
 }
 
 # SVN info.
@@ -125,21 +132,23 @@ function prompt_command() {
 
   prompt_getcolors
   PS1="\n"
+  # misc: [cmd#:hist#]
+  # PS1="$PS1$c1[$c0#\#$c1:$c0!\!$c1]$c9"
+  # path: [user@host:path]
+  PS1="$PS1$c0\u@\h $sep $c3\w$c9 "
   # svn: [repo:lastchanged]
   PS1="$PS1$(prompt_svn)"
   # git: [branch:flags]
   PS1="$PS1$(prompt_git)"
   # hg:  [branch:flags]
   PS1="$PS1$(prompt_hg)"
-  # misc: [cmd#:hist#]
-  # PS1="$PS1$c1[$c0#\#$c1:$c0!\!$c1]$c9"
-  # path: [user@host:path]
-  PS1="$PS1$c1[$c0\u$c1@$c0\h$c1:$c3\w$c1]$c9"
+
   PS1="$PS1\n"
   # exit code: 127
   PS1="$PS1$(prompt_exitcode "$exit_code")"
   # date: [HH:MM:SS]
-  PS1="$PS1$c1[$c4$(date +"%H$c1:$c4%M$c1:$c4%S")$c1]$c9"
+  #PS1="$PS1$c1[$c4$(date +"%H$c1:$c4%M$c1:$c4%S")$c1]$c9"
+  PS1="$PS1$c4$(date +"%H:%M:%S")$c9"
   PS1="$PS1 \$ "
 }
 
