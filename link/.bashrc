@@ -19,6 +19,7 @@ alias ls="gls --color=auto"
 
 source ~/.aliases
 source ~/.exports
+source ~/.prompt
 
 export EDITOR=vim
 export VISUAL=vim

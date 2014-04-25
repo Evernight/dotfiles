@@ -55,7 +55,7 @@ set_sep
 # Exit code of previous command.
 function prompt_exitcode() {
   prompt_getcolors
-  [[ $1 != 0 ]] && echo " $c2$1$c9"
+  [[ $1 != 0 ]] && echo " $c2[$1] "
 }
 
 # Git status.
