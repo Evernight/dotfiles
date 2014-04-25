@@ -6,4 +6,5 @@ pip install ipython pyzmq jinja2 Markdown tornado
 #pip install cherrypy pyyaml
 
 # Mac OS X
+brew install gtk-chtheme
 brew install meld

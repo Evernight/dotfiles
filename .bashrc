@@ -17,9 +17,15 @@ PS1='\[\033[01;32m\]\u\[\033[01;32m\]@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m
 
 alias ls="gls --color=auto"
 
+source .aliases
+source .exports
+
 export EDITOR=vim
 export VISUAL=vim
 
 #if [ `which tmux 2> /dev/null` -a -z "$TMUX" ]; then
 #    tmux -2 attach || tmux -2 new; exit
 #fi
+
+# If possible, add tab completion for many more commands
+[ -f /etc/bash_completion ] && source /etc/bash_completion
