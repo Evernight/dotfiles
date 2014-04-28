@@ -34,13 +34,13 @@ if [[ 1 ]]; then
     "36" # vcs color
   )
 
-  #if [[ "$SSH_TTY" ]]; then
-  #  # connected via ssh
-  #  prompt_colors[0]="32"
-  #elif [[ "$USER" == "root" ]]; then
-  #  # logged in as root
-  #  prompt_colors[0]="35"
-  #fi
+  if [[ "$SSH_TTY" ]]; then
+    # connected via ssh
+    prompt_colors[0]="33"
+  elif [[ "$USER" == "root" ]]; then
+    # logged in as root
+    prompt_colors[0]="35"
+  fi
 fi
 
 # Inside a prompt function, run this alias to setup local $c0-$c9 color vars.
@@ -77,7 +77,7 @@ function prompt_git() {
   if [[ "$flags" ]]; then
     output="$c5$output $flags"
   fi
-  echo "$sep $c0$output $c9"
+  echo "$sep $c5$output $c9"
 }
 
 # hg status.
@@ -98,7 +98,7 @@ function prompt_hg() {
   if [[ "$flags" ]]; then
     output="$c5$output $flags"
   fi
-  echo "$sep $c0$output $c9"
+  echo "$sep $c5$output $c9"
 }
 
 # SVN info.
