@@ -96,9 +96,9 @@ function prompt_hg() {
   )"
   output="$output:$bookmark"
   if [[ "$flags" ]]; then
-    output="$output$c1:$c0$flags"
+    output="$c5$output $flags"
   fi
-  echo "$c0$output $sep $c9"
+  echo "$sep $c0$output $c9"
 }
 
 # SVN info.
