@@ -36,7 +36,7 @@ if [[ 1 ]]; then
 
   if [[ "$SSH_TTY" ]]; then
     # connected via ssh
-    prompt_colors[0]="33"
+    prompt_colors[0]="1;33"
   elif [[ "$USER" == "root" ]]; then
     # logged in as root
     prompt_colors[0]="35"
