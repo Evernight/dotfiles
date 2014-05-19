@@ -23,7 +23,7 @@ Bundle 'L9'
 Bundle 'FuzzyFinder'
 
 "Bundle 'ervandew/supertab'
-Bundle 'Valloric/YouCompleteMe'
+"Bundle 'Valloric/YouCompleteMe'
 
 "Bundle 'lukerandall/haskellmode-vim'
 "Bundle 'eagletmt/ghcmod-vim'
@@ -37,7 +37,7 @@ filetype plugin indent on
 set nocompatible   " Disable vi-compatibility
 set laststatus=2   " Always show the statusline
 set encoding=utf-8 " Necessary to show Unicode glyphs
-let g:Powerline_symbols = 'fancy'
+"let g:Powerline_symbols = 'fancy'
 
 " I have no idea what is this
 let g:miniBufExplMapWindowNavVim = 1
@@ -92,3 +92,8 @@ filetype on                     " filetype detection
 " --------------------------------------------------------------------------------
 au BufRead,BufNewFile *.php set expandtab
 au BufRead,BufNewFile *.php set shiftwidth=2
+
+highlight DiffAdd    cterm=bold ctermfg=15 ctermbg=25 gui=none guifg=bg guibg=Red
+highlight DiffDelete cterm=bold ctermfg=67 ctermbg=67 gui=none guifg=bg guibg=Red
+highlight DiffChange cterm=bold ctermfg=7 ctermbg=52 gui=none guifg=bg guibg=Red
+highlight DiffText   cterm=bold ctermfg=7 ctermbg=166 gui=none guifg=bg guibg=Red
