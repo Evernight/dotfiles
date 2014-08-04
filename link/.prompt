@@ -36,7 +36,7 @@ if [[ 1 ]]; then
 
   if [[ "$SSH_TTY" ]]; then
     # connected via ssh
-    prompt_colors[0]="33"
+    prompt_colors[0]="1;33"
   elif [[ "$USER" == "root" ]]; then
     # logged in as root
     prompt_colors[0]="35"
@@ -136,12 +136,15 @@ function prompt_command() {
   # PS1="$PS1$c1[$c0#\#$c1:$c0!\!$c1]$c9"
   # path: [user@host:path]
   PS1="$PS1$c0\u@\h $sep $c3\w$c9 "
-  # svn: [repo:lastchanged]
-  PS1="$PS1$(prompt_svn)"
-  # git: [branch:flags]
-  PS1="$PS1$(prompt_git)"
-  # hg:  [branch:flags]
-  PS1="$PS1$(prompt_hg)"
+
+  if [[ $VCS_STATUS_IN_PROMPT ]]; then
+    # svn: [repo:lastchanged]
+    PS1="$PS1$(prompt_svn)"
+    # git: [branch:flags]
+    PS1="$PS1$(prompt_git)"
+    # hg:  [branch:flags]
+    PS1="$PS1$(prompt_hg)"
+  fi
 
   PS1="$PS1\n"
   # exit code: 127

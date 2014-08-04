@@ -11,9 +11,11 @@ shopt -s histappend
 HISTSIZE=1000
 HISTFILESIZE=2000
 
-source ~/.aliases
-source ~/.exports
-source ~/.prompt
+if [[ $- =~ "i" ]]; then
+    source ~/.aliases
+    source ~/.exports
+    source ~/.prompt
+fi
 if [ -f ~/.specific_bashrc ]; then
     . ~/.specific_bashrc
 fi
@@ -24,3 +26,6 @@ fi
 
 # If possible, add tab completion for many more commands
 [ -f /etc/bash_completion ] && source /etc/bash_completion
+
+# disable Ctrl-S Ctrl-Q in terminal
+#stty -ixon
