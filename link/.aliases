@@ -48,3 +48,6 @@ alias ql='arc lint --severity warning --never-apply-patches'
 
 # Less
 alias less='less -R'
+
+# Ctrl+G to delete last word from the filepath
+bind '"\C-g": unix-filename-rubout'
