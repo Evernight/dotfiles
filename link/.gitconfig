@@ -51,6 +51,8 @@
 [merge]
 	# Include summaries of merged commits in newly created merge commit messages
 	log = true
+	tool = vimdiff
+	conflictstyle = diff3
 
 # URL shorthands
 [url "git@github.com:"]
@@ -68,3 +70,9 @@
 
 [push]
 	default = matching
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
+[mergetool]
+	prompt = false
