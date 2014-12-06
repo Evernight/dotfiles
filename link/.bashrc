@@ -29,3 +29,6 @@ fi
 
 # disable Ctrl-S Ctrl-Q in terminal
 #stty -ixon
+
+# vi mode
+set -o vi

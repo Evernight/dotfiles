@@ -11,6 +11,9 @@ alias g="git"
 alias h="history"
 alias hgs="~/dotfiles/scripts/hg-full-status.sh"
 alias xgs="xargs -d'\n' -I %% "
+function fs() {
+    find . -iname "*$1*"
+}
 
 alias ls="gls --color=auto"
 

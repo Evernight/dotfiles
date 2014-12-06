@@ -51,7 +51,7 @@
 [merge]
 	# Include summaries of merged commits in newly created merge commit messages
 	log = true
-	tool = vimdiff
+	tool = diffconflicts
 	conflictstyle = diff3
 
 # URL shorthands
@@ -76,3 +76,6 @@
 	prompt = false
 [mergetool]
 	prompt = false
+[mergetool "diffconflicts"]
+	cmd = diffconflicts vim $BASE $LOCAL $REMOTE $MERGED
+	trustExitCode = true
