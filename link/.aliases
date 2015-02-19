@@ -10,6 +10,7 @@ alias -- -="cd -"
 alias g="git"
 alias h="history"
 alias hgs="~/dotfiles/scripts/hg-full-status.sh"
+# Usage: ls -1 | xgs sh -c "hg log %% | tail -n 4"
 alias xgs="xargs -d'\n' -I %% "
 function fs() {
     find . -iname "*$1*"

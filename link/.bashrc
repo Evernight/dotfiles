@@ -31,4 +31,4 @@ fi
 #stty -ixon
 
 # vi mode
-set -o vi
+#set -o vi
