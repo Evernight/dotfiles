@@ -8,8 +8,8 @@ HISTCONTROL=ignoredups:ignorespace
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+HISTSIZE=100000
+HISTFILESIZE=-1
 
 if [[ $- =~ "i" ]]; then
     source ~/.aliases
