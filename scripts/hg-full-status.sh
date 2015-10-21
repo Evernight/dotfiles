@@ -6,7 +6,7 @@ HG_TEMPLATE='\x1B[38;5;215m{node|short}\x1B[0m\t \x1B[38;5;221m{join(bookmarks,"
 
 if [[ -n $(hg log -r 'children(.)') ]]; then
 	REV_TITLE="\x1B[1;44mCHILD\x1B[0m\t"
-	hg log -r 'children(.)' --template "${REV_TITLE}${HG_TEMPLATE}"
+	hg log -r 'children(.)' --template "${REV_TITLE}${HG_TEMPLATE}\n"
 fi
 
 REV_TITLE="\x1B[1;44mHEAD\x1B[0m\t"

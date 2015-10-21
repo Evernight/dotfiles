@@ -6,12 +6,11 @@ alias .....="cd ../../../.."
 alias ~="cd ~" # `cd` is probably faster to type though
 alias -- -="cd -"
 
-# Shortcuts
-alias g="git"
-alias h="history"
 alias hgs="~/dotfiles/scripts/hg-full-status.sh"
-# Usage: ls -1 | xgs sh -c "hg log %% | tail -n 4"
-alias xgs="xargs -d'\n' -I %% "
+
+# Usage: ls -1 | xgs "hg log %% | tail -n 4"
+alias xgs="xargs -d'\n' -I %% sh -c "
+
 function fs() {
     find . -iname "*$1*"
 }
@@ -41,14 +40,11 @@ alias sudo='sudo '
 # Stopwatch
 alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
 
-# Get OS X Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
-alias updateall='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; npm update npm -g; npm update -g; sudo gem update'
-
 # Arcanist
 alias ql='arc lint --severity warning --never-apply-patches'
 
 # Less
-alias less='less -R'
+#alias less='less -R'
 
 # Ctrl+G to delete last word from the filepath
 bind '"\C-g": unix-filename-rubout'
