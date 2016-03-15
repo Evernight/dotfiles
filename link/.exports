@@ -6,6 +6,7 @@ export VISUAL=vim
 export HISTSIZE=32768
 export HISTFILESIZE=$HISTSIZE
 export HISTCONTROL=ignoredups
+
 # Make some commands not show up in history
 export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"
 
@@ -24,3 +25,10 @@ export GREP_OPTIONS="--color=auto"
 
 # Link Homebrew casks in `/Applications` rather than `~/Applications`
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+
+export NPM_PACKAGES="${HOME}/.npm-packages"
+
+export ANDROID_SDK=/Users/slowbro/Library/Android/sdk
+export ANDROID_NDK=/Users/slowbro/Library/Android/android-ndk-r10e/
+export ANDROID_HOME=${ANDROID_SDK}
+export PATH=${PATH}:${ANDROID_SDK}/tools:${ANDROID_SDK}/platform-tools
