@@ -1,0 +1,22 @@
+[alias]
+s = status
+sr = status --rev .^
+dr = diff -r .^
+
+[ui]
+username = Vasily Medyanikov <slowbro@fb.com>
+merge = vimdiff
+
+[extensions]
+record=
+fbamend=
+directaccess=!
+inhibit=!
+
+#[experimental]                                                                
+#evolution=all
+
+[merge-tools]
+vimdiff.executable = vim
+vimdiff.args = -d $base $local $output $other +close +close
+
