@@ -14,6 +14,7 @@
 	c = clone --recursive
 	# Commit all changes
 	ca = !git add -A && git commit -av
+    co = checkout
 	# Switch to a branch, creating it if necessary
 	go = checkout -B
 	# Show verbose output about tags, branches or remotes
@@ -24,6 +25,9 @@
 	credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
 	# Interactive rebase with the given number of latest commits
 	reb = "!r() { git rebase -i HEAD~$1; }; r"
+    # diff with parent revision
+    dr = diff --name-status HEAD HEAD~1
+    amen = commit --amen -a
 
 [core]
 	# Use custom `.gitignore` and `.gitattributes`
@@ -79,3 +83,4 @@
 [mergetool "diffconflicts"]
 	cmd = diffconflicts vim $BASE $LOCAL $REMOTE $MERGED
 	trustExitCode = true
+

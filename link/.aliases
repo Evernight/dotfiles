@@ -48,3 +48,7 @@ alias ql='arc lint --severity warning --never-apply-patches'
 
 # Ctrl+G to delete last word from the filepath
 bind '"\C-g": unix-filename-rubout'
+
+# Android
+alias lc='function _lc(){ fname=`date "+$1%Y-%m-%d %H:%M:%S"`; adb logcat -v time > "$fname"; };_lc'
+#alias lc='adb logcat -v time
