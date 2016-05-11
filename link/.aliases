@@ -15,8 +15,6 @@ function fs() {
     find . -iname "*$1*"
 }
 
-alias ls="gls --color=auto"
-
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
 	colorflag="--color"
@@ -46,8 +44,12 @@ alias ql='arc lint --severity warning --never-apply-patches'
 # Less
 #alias less='less -R'
 
-# Ctrl+G to delete last word from the filepath
-bind '"\C-g": unix-filename-rubout'
+if [[ $SHELL == "/bin/bash" ]] then
+    # Ctrl+G to delete last word from the filepath
+    bind '"\C-g": unix-filename-rubout'
+
+    alias ls="gls --color=auto"
+fi
 
 # Android
 alias lc='function _lc(){ fname=`date "+$1%Y-%m-%d %H:%M:%S"`; adb logcat -v time > "$fname"; };_lc'
