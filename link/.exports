@@ -21,7 +21,7 @@ export LESS_TERMCAP_md="$ORANGE"
 #export MANPAGER="less -X"
 
 # Always enable colored `grep` output
-export GREP_OPTIONS="--color=auto"
+#export GREP_OPTIONS="--color=auto"
 
 # Link Homebrew casks in `/Applications` rather than `~/Applications`
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
@@ -32,3 +32,8 @@ export ANDROID_SDK=/Users/slowbro/Library/Android/sdk
 export ANDROID_NDK=/Users/slowbro/Library/Android/android-ndk-r10e/
 export ANDROID_HOME=${ANDROID_SDK}
 export PATH=${PATH}:${ANDROID_SDK}/tools:${ANDROID_SDK}/platform-tools
+
+# Windows
+export JAVA_HOME=/cygdrive/c/Program\ Files/Java/jdk1.7.0_79/
+#export ANDROID_NDK=/cygdrive/c/Libraries/android-ndk-r10e
+export ANDROID_NDK="C:\\Libraries\\android-ndk-r10e\\ndk-build.cmd"
