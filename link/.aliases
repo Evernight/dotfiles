@@ -7,6 +7,7 @@ alias ~="cd ~" # `cd` is probably faster to type though
 alias -- -="cd -"
 
 alias hgs="~/dotfiles/scripts/hg-full-status.sh"
+alias vgd="~/dotfiles/bin/vimdiffgit.sh"
 
 # Usage: ls -1 | xgs "hg log %% | tail -n 4"
 alias xgs="xargs -d'\n' -I %% sh -c "
@@ -40,6 +41,7 @@ alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date
 
 # Arcanist
 alias ql='arc lint --severity warning --never-apply-patches'
+alias ardi='arc diff --allow-untracked'
 
 # Less
 #alias less='less -R'
@@ -51,11 +53,19 @@ if [[ $SHELL == "/bin/bash" ]] then
     alias ls="gls --color=auto"
 fi
 
-# Android
-alias lc='function _lc(){ fname=`date "+$1%Y-%m-%d %H:%M:%S"`; adb logcat -v time > "$fname"; };_lc'
-#alias lc='adb logcat -v time
+# Android development
+function _lc() {  
+    trap 'echo "stopped writing logs";' INT;
+    fname=`date "+$1%Y-%m-%d_%H:%M:%S"`; 
+    adb logcat -v time > "$fname"; 
+    echo "Logs saved to $fname" ;
+    trap - INT;
+}
+alias lc=_lc
 
+# Windows
 alias subl='/cygdrive/c/Program\ Files/Sublime\ Text\ 3/sublime_text.exe'
+alias wudo=cygstart --action=runas
 
 function adbreplace() {
     adb uninstall $1

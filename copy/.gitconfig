@@ -1,10 +1,12 @@
 [alias]
-	# View abbreviated SHA, description, and history graph of the latest 20 commits
+	# View abbreviated SHA, description, and history graph
     slog = log --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-    l = log --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative -n 20
+    l = !git --no-pager log --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative -n 50
     # simple aliases
     b = branch
     mt = mergetool
+    co = checkout
+    up = checkout
     # reset
     hard = reset --hard HEAD
 	# View the current working tree status using the short format
@@ -19,28 +21,30 @@
     #c = clone --recursive
 	# Commit all changes
     #ca = !git add -A && git commit -av
-    co = checkout
 	# Switch to a branch, creating it if necessary
 	go = checkout -B
 	# Show verbose output about tags, branches or remotes
-	tags = tag -l
-	branches = branch -a
-	remotes = remote -v
+    #tags = tag -l
+    #branches = branch -a
+    #remotes = remote -v
 	# Credit an author on the latest commit
     #credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
 	# Interactive rebase with the given number of latest commits
     #reb = "!r() { git rebase -i HEAD~$1; }; r"
     # diff with parent revision
-    dr = diff --name-status HEAD HEAD~1
+    dr = !git --no-pager diff --name-status HEAD HEAD~1 --color
     # amend
     amen = commit --amen -a --no-edit
+    ramen = commit --amen --no-edit
     # pull
     get = pull --rebase origin master
-    # revert file to HEAD
+    # revert files
     rev = checkout HEAD
+    reve = checkout HEAD~1
+    # go to master
     om = checkout origin/master
 
-    # stash 
+    # stash operations
     # http://stackoverflow.com/questions/11269256/how-to-name-and-retrieve-a-stash-by-name-in-git
     sshow = "!f() { git stash show stash^{/$*} -p; }; f"
     sapply = "!f() { git stash apply stash^{/$*}; }; f"
@@ -53,6 +57,7 @@
 	trustctime = false
 	preloadindex = true
 	fscache = true
+    #pager = cat
 
 [color]
 	# Use colors in Git commands that are capable of colored output when
