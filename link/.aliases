@@ -10,7 +10,11 @@ alias hgs="~/dotfiles/scripts/hg-full-status.sh"
 alias vgd="~/dotfiles/bin/vimdiffgit.sh"
 
 # Usage: ls -1 | xgs "hg log %% | tail -n 4"
-alias xgs="xargs -d'\n' -I %% sh -c "
+#alias xgs="xargs -d'\n' -I %% sh -c "
+function xgs() {
+    command="$@";
+    xargs -d'\n' -I %% sh -c $command;
+}
 
 function fs() {
     find . -iname "*$1*"
@@ -57,9 +61,12 @@ fi
 function _lc() {  
     trap 'echo "stopped writing logs";' INT;
     fname=`date "+$1%Y-%m-%d_%H:%M:%S"`; 
+    adb logcat -c;
+    echo "Logcat cleared";
     adb logcat -v time > "$fname"; 
     echo "Logs saved to $fname" ;
     trap - INT;
+    dos2unix -f "$fname"
 }
 alias lc=_lc
 
@@ -71,3 +78,4 @@ function adbreplace() {
     adb uninstall $1
     adb install $1
 }
+

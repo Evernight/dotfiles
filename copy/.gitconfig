@@ -12,9 +12,10 @@
 	# View the current working tree status using the short format
 	s = status -sb
 	# Show the diff between the latest commit and the current state
-	d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+    #d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
 	# `git di $number` shows the diff between the state `$number` revisions ago and the current state
-	di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
+    #di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
+    di = diff -r HEAD~1
 	# Pull in remote changes for the current repository and all its submodules
     #p = !"git pull; git submodule foreach git pull origin master"
 	# Clone a repository including all submodules
@@ -31,8 +32,8 @@
     #credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
 	# Interactive rebase with the given number of latest commits
     #reb = "!r() { git rebase -i HEAD~$1; }; r"
-    # diff with parent revision
-    dr = !git --no-pager diff --name-status HEAD HEAD~1 --color
+    # File names that have changed with the latest diff
+    dr = !git --no-pager diff --name-status HEAD~1 HEAD --color
     # amend
     amen = commit --amen -a --no-edit
     ramen = commit --amen --no-edit
@@ -40,9 +41,11 @@
     get = pull --rebase origin master
     # revert files
     rev = checkout HEAD
-    reve = checkout HEAD~1
+    prev = checkout HEAD~1
     # go to master
     om = checkout origin/master
+    # rebase last commit on master
+    chop = rebase --onto origin/master HEAD~1 HEAD
 
     # stash operations
     # http://stackoverflow.com/questions/11269256/how-to-name-and-retrieve-a-stash-by-name-in-git

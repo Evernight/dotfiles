@@ -7,21 +7,23 @@ colorscheme wombat256my
 " Bundles {{{
 set nocompatible
 filetype off
-set rtp+=~/.vim/bundle/vundle/
+set rtp+=~/.vim/bundle/Vundle.vim/
 call vundle#rc()
 
 Bundle 'gmarik/vundle'
-Bundle 'scrooloose/nerdtree'
+"Bundle 'scrooloose/nerdtree'
+" Git workflows
 Bundle 'fugitive.vim'
+" Improved status line
 Bundle 'Lokaltog/vim-powerline'
-Bundle 'mileszs/ack.vim'
-Bundle 'Shougo/vimproc'
-Bundle 'Shougo/vimshell'
-Bundle 'tpope/vim-commentary'
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'L9'
-Bundle 'FuzzyFinder'
-
+"Bundle 'mileszs/ack.vim'
+"Bundle 'Shougo/vimproc'
+"Bundle 'Shougo/vimshell'
+"Bundle 'tpope/vim-commentary'
+"Bundle 'altercation/vim-colors-solarized'
+"Bundle 'L9'
+"Bundle 'FuzzyFinder'
+"
 "Bundle 'ervandew/supertab'
 "Bundle 'Valloric/YouCompleteMe'
 
@@ -71,6 +73,8 @@ set tabstop=4           " use 4 spaces to represent tab
 set softtabstop=4
 set shiftwidth=4        " number of spaces to use for auto indent
 set autoindent          " copy indent from current line when starting a new line
+
+set cursorline
 
 " make backspaces more powerful
 set backspace=indent,eol,start
