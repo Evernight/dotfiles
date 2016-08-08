@@ -28,12 +28,16 @@ export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 export NPM_PACKAGES="${HOME}/.npm-packages"
 
-export ANDROID_SDK=/Users/slowbro/Library/Android/sdk
-export ANDROID_NDK=/Users/slowbro/Library/Android/android-ndk-r10e/
-export ANDROID_HOME=${ANDROID_SDK}
-export PATH=${PATH}:${ANDROID_SDK}/tools:${ANDROID_SDK}/platform-tools
+# Mac
+#export ANDROID_SDK=/Users/slowbro/Library/Android/sdk
+#export ANDROID_NDK=/Users/slowbro/Library/Android/android-ndk-r10e/
+#export ANDROID_HOME=${ANDROID_SDK}
+#export PATH=${PATH}:${ANDROID_SDK}/tools:${ANDROID_SDK}/platform-tools
 
-# Windows
+# Windows 
 export JAVA_HOME=/cygdrive/c/Program\ Files/Java/jdk1.7.0_79/
-#export ANDROID_NDK=/cygdrive/c/Libraries/android-ndk-r10e
-export ANDROID_NDK="C:\\Libraries\\android-ndk-r10e\\ndk-build.cmd"
+export ANDROID_NDK=/cygdrive/c/Libraries/android-ndk-r10e
+#export ANDROID_NDK="C:\\Libraries\\android-ndk-r10e\\ndk-build.cmd"
+
+export PATH=${PATH}:~/dotfiles/bin:~/dotfiles/scripts
+export PATH=${PATH}:${ANDROID_NDK}

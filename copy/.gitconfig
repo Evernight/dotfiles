@@ -33,7 +33,7 @@
 	# Interactive rebase with the given number of latest commits
     #reb = "!r() { git rebase -i HEAD~$1; }; r"
     # File names that have changed with the latest diff
-    dr = !git --no-pager diff --name-status HEAD~1 HEAD --color
+    dr = !git --no-pager diff --name-status HEAD~1 | git-status-color.sh
     # amend
     amen = commit --amen -a --no-edit
     ramen = commit --amen --no-edit
@@ -46,6 +46,8 @@
     om = checkout origin/master
     # rebase last commit on master
     chop = rebase --onto origin/master HEAD~1 HEAD
+    # stop tracking files
+    untrack = rm -r --cached
 
     # stash operations
     # http://stackoverflow.com/questions/11269256/how-to-name-and-retrieve-a-stash-by-name-in-git
