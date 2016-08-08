@@ -17,7 +17,21 @@ function xgs() {
 }
 
 function fs() {
-    find . -iname "*$1*"
+    find . -iname "*$1*";
+}
+
+function gs() {
+    #find . -type f -exec egrep your_text  {} \;
+    egrep -ir "$@" .;
+}
+
+function cb() {
+    content="";
+    while read line;
+    do
+        content+="$line\n";
+    done
+    echo -n "${content: : -2}" > /dev/clipboard
 }
 
 # Detect which `ls` flavor is in use
@@ -58,7 +72,7 @@ if [[ $SHELL == "/bin/bash" ]] then
 fi
 
 # Android development
-function _lc() {  
+function lc() {  
     trap 'echo "stopped writing logs";' INT;
     fname=`date "+$1%Y-%m-%d_%H:%M:%S"`; 
     adb logcat -c;
@@ -68,14 +82,14 @@ function _lc() {
     trap - INT;
     dos2unix -f "$fname"
 }
-alias lc=_lc
+
+function adbcon() {
+    ip=`adb shell ifconfig wlan0 | grep 'inet addr' | sed 's/.*inet addr:\([0-9\.]*\).*/\1/'`
+    adb tcpip 5555
+    adb connect $ip:5555
+}
 
 # Windows
 alias subl='/cygdrive/c/Program\ Files/Sublime\ Text\ 3/sublime_text.exe'
 alias wudo=cygstart --action=runas
-
-function adbreplace() {
-    adb uninstall $1
-    adb install $1
-}
 

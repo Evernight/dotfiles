@@ -40,4 +40,4 @@ export ANDROID_NDK=/cygdrive/c/Libraries/android-ndk-r10e
 #export ANDROID_NDK="C:\\Libraries\\android-ndk-r10e\\ndk-build.cmd"
 
 export PATH=${PATH}:~/dotfiles/bin:~/dotfiles/scripts
-export PATH=${PATH}:${ANDROID_NDK}
+export PATH=${PATH}:${JAVA_HOME}/bin:${ANDROID_NDK}
