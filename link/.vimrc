@@ -16,6 +16,8 @@ Bundle 'gmarik/vundle'
 Bundle 'fugitive.vim'
 " Improved status line
 Bundle 'Lokaltog/vim-powerline'
+" Multicursor!
+Bundle 'terryma/vim-multiple-cursors'
 "Bundle 'mileszs/ack.vim'
 "Bundle 'Shougo/vimproc'
 "Bundle 'Shougo/vimshell'
@@ -47,6 +49,11 @@ let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplMapWindowNavArrows = 1
 let g:miniBufExplMapCTabSwitchBufs = 1
 let g:miniBufExplModSelTarget = 1
+
+" MultiCursor
+" Do not lose cursors on ESC
+let g:multi_cursor_exit_from_visual_mode = 0
+let g:multi_cursor_exit_from_insert_mode = 0
 
 " TODO: do I need these?
 "map T :TaskList<CR>
