@@ -20,6 +20,10 @@ function fs() {
     find . -iname "*$1*";
 }
 
+function fsf() {
+    fs $@ | xgs readlink -f %%
+}
+
 function gs() {
     #find . -type f -exec egrep your_text  {} \;
     egrep -ir "$@" .;
@@ -61,9 +65,6 @@ alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date
 alias ql='arc lint --severity warning --never-apply-patches'
 alias ardi='arc diff --allow-untracked'
 
-# Less
-#alias less='less -R'
-
 if [[ $SHELL == "/bin/bash" ]] then
     # Ctrl+G to delete last word from the filepath
     bind '"\C-g": unix-filename-rubout'
@@ -74,13 +75,14 @@ fi
 # Android development
 function lc() {  
     trap 'echo "stopped writing logs";' INT;
-    fname=`date "+$1%Y-%m-%d_%H:%M:%S"`; 
+    fname=`date "+$1%Y-%m-%d_%H:%M:%S.logcat"`; 
     adb logcat -c;
     echo "Logcat cleared";
     adb logcat -v time > "$fname"; 
     echo "Logs saved to $fname" ;
     trap - INT;
     dos2unix -f "$fname"
+    open "$fname"
 }
 
 function adbcon() {
@@ -93,3 +95,41 @@ function adbcon() {
 alias subl='/cygdrive/c/Program\ Files/Sublime\ Text\ 3/sublime_text.exe'
 alias wudo=cygstart --action=runas
 
+function printargs() {
+    for arg in $@
+    do
+        echo $arg;
+    done
+}
+
+function runonargs() {
+    cmd=$1
+    shift
+    for arg in $@
+    do
+        $cmd $arg;
+    done
+}
+
+# fpp 
+alias fpp=~/dotfiles/external/PathPicker/fpp
+
+#function so() {
+#    if [ $# -eq 0 ];
+#    then
+#        $(fc -ln -1) | fpp -c printargs
+#    else
+#        $(fc -ln -1) | fpp -c printargs | xgs "$@"
+#    fi
+#}
+
+function so() {
+    if [ $# -eq 0 ];
+    then
+        $(fc -ln -1) | fpp -c printargs
+    else
+        $(fc -ln -1) | fpp -c runonargs $@;
+    fi
+}
+
+alias cpar=cp --parent -r 
