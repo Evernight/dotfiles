@@ -36,7 +36,7 @@ export NPM_PACKAGES="${HOME}/.npm-packages"
 
 # Windows 
 export JAVA_HOME=/cygdrive/c/Program\ Files/Java/jdk1.7.0_79/
-export ANDROID_NDK=/cygdrive/c/Libraries/android-ndk-r10e
+export ANDROID_NDK=/cygdrive/c/Libraries/android-ndk-r12b
 #export ANDROID_NDK="C:\\Libraries\\android-ndk-r10e\\ndk-build.cmd"
 
 export PATH=${PATH}:~/dotfiles/bin:~/dotfiles/scripts

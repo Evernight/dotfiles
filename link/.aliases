@@ -16,7 +16,7 @@ function xgs() {
     xargs -d'\n' -I %% sh -c $command;
 }
 
-function fs() {
+function _fs() {
     find . -iname "*$1*";
 }
 
@@ -24,7 +24,14 @@ function fsf() {
     fs $@ | xgs readlink -f %%
 }
 
+alias fs='noglob _fs '
+
 function gs() {
+    #find . -type f -exec egrep your_text  {} \;
+    egrep -irI "$@" .;
+}
+
+function gsb() {
     #find . -type f -exec egrep your_text  {} \;
     egrep -ir "$@" .;
 }
@@ -63,7 +70,9 @@ alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date
 
 # Arcanist
 alias ql='arc lint --severity warning --never-apply-patches'
-alias ardi='arc diff --allow-untracked'
+alias ardi='arc diff --allow-untracked '
+alias ardio='arc diff --allow-untracked --only '
+alias ardip='arc diff --allow-untracked --prepare '
 
 if [[ $SHELL == "/bin/bash" ]] then
     # Ctrl+G to delete last word from the filepath
@@ -83,6 +92,10 @@ function lc() {
     trap - INT;
     dos2unix -f "$fname"
     open "$fname"
+}
+
+function fixlc() {
+    cat $1 | sed -E 's/(\S+?)\s+(\S+?)\s+(\S+?)\s+\S+?\s+(\S+?)\s+(\S+?)\s*: (.*)/\1 \2 \4\/\5\t(\3): \6/' > out.logcat && open out.logcat
 }
 
 function adbcon() {
@@ -132,4 +145,9 @@ function so() {
     fi
 }
 
-alias cpar=cp --parent -r 
+alias cpar="cp --parent -r"
+
+# ZSH global aliases
+alias -g OM=origin/master
+
+alias inrooms='adb shell am force-stop com.oculus.horizon && adb shell am force-stop com.oculus.home && adb uninstall com.oculus.rooms && adb install -r '
