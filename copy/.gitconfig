@@ -1,58 +1,102 @@
 [alias]
+    ###### Common ######
+    
+    # Make branch 
+    b = branch
+    # Move branch
+    bm = "!f() { git branch -f $@ HEAD; }; f"
+
+    # Pull
+    get = pull --rebase origin master
+
+    ###### Navigation ######
+    
+    # Checkout
+    co = checkout
+    up = checkout
+
+    # Go to master
+    om = checkout origin/master
+
+
+    ###### Operating changes ######
+    
+    # Create commit
+    new = commit -a -m
+    # Amend commit
+    amen = commit --amen -a --no-edit
+    ramen = commit --amen --no-edit
+    bramen = !git ramen && git burn
+
+    # Revert files
+    rev = checkout HEAD
+    prev = checkout HEAD~1
+
+    # Stop tracking file but leave it be
+    untrack = rm -r --cached
+
+    # Cleanup
+    hard = reset --hard HEAD
+    cln = clean -df
+    burn = !git hard && git cln
+
+    ###### Merging ######
+    mt = mergetool
+
+    okay = !git checkout --ours $@ && git add $@
+
+    reco = rebase --continue
+
+    ####### Viewing stuff #######
+    
+	# View the current working tree status using the short format
+	s = status -sb
+
+    # File names that have changed with the latest diff
+    dr = !git --no-pager diff --name-status HEAD~1 | git-status-color.sh
+    #dno = "!f() { git --no-pager diff --name-status \"$@\" }; f"
+    # File names that have changed with the latest diff
+    drr = "!f() { git --no-pager diff --name-status $1 $2 | git-status-color.sh; }; f"
+
+    # Changes in file
+    di = "!f() { git diff -r HEAD~1 $1; }; f"
+
 	# View abbreviated SHA, description, and history graph
     slog = log --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
     l = !git --no-pager log --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative -n 50
-    # simple aliases
-    b = branch
-    mt = mergetool
-    co = checkout
-    up = checkout
-    # reset
-    hard = reset --hard HEAD
-	# View the current working tree status using the short format
-	s = status -sb
+
+
+    ###### Manipulating commits ######
+    
+    # rebase last commit on master
+    chop = rebase --onto origin/master HEAD~1 HEAD
+
+    ###### Misc ######
+
+    # Stash operations
+    # http://stackoverflow.com/questions/11269256/how-to-name-and-retrieve-a-stash-by-name-in-git
+    sshow = "!f() { git stash show stash^{/$*} -p; }; f"
+    sapply = "!f() { git stash apply stash^{/$*}; }; f"
+
+    ###### Unused ######
 	# Show the diff between the latest commit and the current state
     #d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
 	# `git di $number` shows the diff between the state `$number` revisions ago and the current state
     #di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
-    di = diff -r HEAD~1
 	# Pull in remote changes for the current repository and all its submodules
     #p = !"git pull; git submodule foreach git pull origin master"
 	# Clone a repository including all submodules
     #c = clone --recursive
 	# Commit all changes
     #ca = !git add -A && git commit -av
-	# Switch to a branch, creating it if necessary
-	go = checkout -B
 	# Show verbose output about tags, branches or remotes
     #tags = tag -l
-    #branches = branch -a
-    #remotes = remote -v
+    branches = branch -a
+    remotes = remote -v
 	# Credit an author on the latest commit
     #credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
 	# Interactive rebase with the given number of latest commits
     #reb = "!r() { git rebase -i HEAD~$1; }; r"
-    # File names that have changed with the latest diff
-    dr = !git --no-pager diff --name-status HEAD~1 | git-status-color.sh
-    # amend
-    amen = commit --amen -a --no-edit
-    ramen = commit --amen --no-edit
-    # pull
-    get = pull --rebase origin master
-    # revert files
-    rev = checkout HEAD
-    prev = checkout HEAD~1
-    # go to master
-    om = checkout origin/master
-    # rebase last commit on master
-    chop = rebase --onto origin/master HEAD~1 HEAD
-    # stop tracking files
-    untrack = rm -r --cached
-
-    # stash operations
-    # http://stackoverflow.com/questions/11269256/how-to-name-and-retrieve-a-stash-by-name-in-git
-    sshow = "!f() { git stash show stash^{/$*} -p; }; f"
-    sapply = "!f() { git stash apply stash^{/$*}; }; f"
 
 [core]
 	# Use custom `.gitignore` and `.gitattributes`
