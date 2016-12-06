@@ -158,8 +158,5 @@
     cmd = ~/dotfiles/bin/mydiffconflicts vim $BASE $LOCAL $REMOTE $MERGED
     #cmd = vimdiff $MERGED $LOCAL $REMOTE
 	trustExitCode = true
-[user]
-	email = vasily.medyanikov@oculus.com
-	name = Vasily Medyanikov
 [gc]
 	auto = 256
