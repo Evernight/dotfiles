@@ -86,5 +86,16 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-source .aliases
-source .exports
+# zaw
+source $HOME/dotfiles/external/zaw/zaw.zsh
+bindkey '^R' zaw-history
+bindkey -M filterselect '^R' down-line-or-history
+bindkey -M filterselect '^S' up-line-or-history
+bindkey -M filterselect '^E' accept-search
+
+zstyle ':filter-select' max-lines 5
+zstyle ':filter-select' case-insensitive yes # enable case-insensitive 
+zstyle ':filter-select' extended-search yes 
+
+source $HOME/.aliases
+source $HOME/.exports
