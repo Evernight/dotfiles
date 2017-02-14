@@ -91,7 +91,7 @@ set ruler                       " show line and column number
 set showcmd                     " show (partial) command in status line
 set number                      " line numbers
 set hlsearch                    " highlight search items
-set smartcase                   " smart case-(in)dependent search
+set ignorecase                  " case-independent search
 
 syntax on                       " syntax highlighting
 filetype on                     " filetype detection

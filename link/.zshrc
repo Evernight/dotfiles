@@ -100,6 +100,8 @@ bindkey -M filterselect '^E' accept-search
 zstyle ':filter-select' max-lines 5
 zstyle ':filter-select' case-insensitive yes # enable case-insensitive 
 zstyle ':filter-select' extended-search yes 
+zstyle ':filter-select' hist-find-no-dups yes
+#zstyle ':filter-select' escape-descriptions yes
 
 source $HOME/.aliases
 source $HOME/.aliases_local
