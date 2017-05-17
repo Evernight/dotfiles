@@ -59,6 +59,7 @@ plugins=(git tmux)
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
 
+DISABLE_AUTO_UPDATE=true
 source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
@@ -86,6 +87,9 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# Enable comments in shell commands
+setopt interactivecomments
+
 # zaw
 source $HOME/dotfiles/external/zaw/zaw.zsh
 bindkey '^R' zaw-history
@@ -98,4 +102,5 @@ zstyle ':filter-select' case-insensitive yes # enable case-insensitive
 zstyle ':filter-select' extended-search yes 
 
 source $HOME/.aliases
+source $HOME/.aliases_local
 source $HOME/.exports

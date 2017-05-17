@@ -21,7 +21,7 @@ function _fs() {
 }
 
 function fsf() {
-    fs $@ | xgs readlink -f %%
+    _fs $@ | xgs readlink -f %%
 }
 
 alias fs='noglob _fs '
@@ -82,31 +82,85 @@ if [[ $SHELL == "/bin/bash" ]] then
 fi
 
 # Android development
-function lc() {  
+function lcpre() {  
     trap 'echo "stopped writing logs";' INT;
     fname=`date "+$1%Y-%m-%d_%H:%M:%S.logcat"`; 
     adb logcat -c;
     echo "Logcat cleared";
-    adb logcat -v time > "$fname"; 
+    #adb logcat -v time > "$fname"; 
+    adb logcat | grep -v "RestrictionPolicy: userId: 0" > "$fname"; 
     echo "Logs saved to $fname" ;
     trap - INT;
     dos2unix -f "$fname"
     open "$fname"
 }
 
+function lcclean() {
+    best_device=`adb_best_device`
+    adb -s $best_device logcat -c;
+}
+
+function lcpost() {
+    best_device=`adb_best_device`
+    echo "Grabbing the logs";
+    fname=`date "+$1%Y-%m-%d_%H:%M:%S.logcat"`;
+    adb -s $best_device logcat -d | grep -v "RestrictionPolicy: userId: 0" > "$fname";
+    echo "Logs saved to $fname" ;
+    dos2unix -f "$fname"
+    cygstart "$fname"
+}
+
 function fixlc() {
     cat $1 | sed -E 's/(\S+?)\s+(\S+?)\s+(\S+?)\s+\S+?\s+(\S+?)\s+(\S+?)\s*: (.*)/\1 \2 \4\/\5\t(\3): \6/' > out.logcat && open out.logcat
 }
 
+function adb_best_device() {
+    remote=`adb devices | sed -n 's/\([0-9\.]*:[0-9]\+\).*/\1/p'`
+    local=`adb devices | sed -nr 's/^([0-9a-zA-Z]+)\s+device$/\1/p'`
+    if [[ -n $local && -n $remote ]] then
+       echo "Both local ($local) and remote ($remote) connected" >&2
+    fi
+    if [[ -n $local ]] then
+       echo "$local"
+       return 0
+    fi
+    if [[ -n $remote ]] then
+       echo "$remote"
+       return 0
+    fi
+    return 1
+}
+
+function adbdis() {
+    adb disconnect
+}
+
 function adbcon() {
+    adbdis;
     ip=`adb shell ifconfig wlan0 | grep 'inet addr' | sed 's/.*inet addr:\([0-9\.]*\).*/\1/'`
-    adb tcpip 5555
+    adb tcpip 5555 &&
     adb connect $ip:5555
+}
+
+function adbcondev() {
+    device=$1;
+    echo "Connecting $device";
+    ip=`adb -s $device shell ifconfig wlan0 | grep 'inet addr' | sed 's/.*inet addr:\([0-9\.]*\).*/\1/'`;
+    echo "ip=$ip"
+    adb -s $device tcpip 5555;
+    adb -s $device connect $ip:5555;
+    echo ""
+}
+
+function adbconall() {
+    local_devices=($(adb devices | sed -nr 's/^([0-9a-zA-Z]+)\s+device$/\1/p'))
+    for device in $local_devices; do 
+        adbcondev $device;
+    done
 }
 
 # Windows
 alias subl='/cygdrive/c/Program\ Files/Sublime\ Text\ 3/sublime_text.exe'
-alias wudo=cygstart --action=runas
 
 function printargs() {
     for arg in $@
@@ -150,4 +204,82 @@ alias cpar="cp --parent -r"
 # ZSH global aliases
 alias -g OM=origin/master
 
+alias magick='/cygdrive/c/Program\ Files/ImageMagick-7.0.5-Q16/magick.exe'
 alias inrooms='adb shell am force-stop com.oculus.horizon && adb shell am force-stop com.oculus.home && adb uninstall com.oculus.rooms && adb install -r '
+alias lastrooms='inrooms /home/slowbro/oculus-social-hub/Main/Temp/StagingArea/Package.apk'
+
+function adbreplace() {
+    best_device=$2;
+    if [[ -z "$best_device" ]]; then
+        best_device=`adb_best_device`;
+    fi
+    package=$(aapt dump badging $1 | awk '/package/{gsub("name=|'"'"'","");  print $2}')
+    echo "Package: $package"
+    echo "Uninstalling"
+    adb -s $best_device uninstall $package &&
+    adb -s $best_device install $1 | awk 1 ORS='\r' &&
+    echo "                                                                                   " &&
+    echo "Success!"
+}
+
+function adbreplaceall() {
+    local_devices=($(adb devices | sed -nr 's/^([0-9a-zA-Z]+)\s+device$/\1/p'))
+    for device in $local_devices; do 
+        echo "Replace for $device"
+        adbreplace $1 $device;
+    done
+}
+
+function adbstopall() {
+    local_devices=($(adb devices | sed -nr 's/^([0-9a-zA-Z]+)\s+device$/\1/p'))
+    for device in $local_devices; do 
+        echo "Stop for $device"
+        adb -s $device shell am force-stop com.oculus.rooms
+    done
+}
+
+function apkver() {
+    package=$(aapt dump badging "$1" | awk '/package/{gsub("name=|'"'"'","");  print $2}')
+    version=$(aapt dump badging "$1" | awk '/package/{gsub("versionName=|'"'"'","");  print $4}')
+    echo "Package: $package"
+    echo "Version: $version"
+}
+
+function adbfresh() {
+    latest=$( ls -t *.apk | head -1 );
+    echo "Latest file is $latest"
+    adbreplace $latest;
+    lcclean;
+}
+
+function metaref() {
+    filename=$1
+    if ! [[ -e $1 ]];
+    then
+        filename=`fs $1.prefab.meta | grep prefab.meta`
+        linescount=`echo $filename | wc -l`
+        if [[ $linescount -gt 1 ]];
+        then
+            echo "Too many files matching"
+            echo $filename
+            return 1
+        fi
+    fi
+    guid=`cat $filename | grep guid | sed -E 's/guid: (.*)/\1/'`;
+    echo "Looking for references to $filename ($guid)"
+    gs $guid
+}
+
+function replacefile() {
+    filename=`basename $1`
+    toreplace=`find $2 -iname $filename`
+    linescount=`echo $toreplace | wc -l`
+    if [[ $linescount -gt 1 ]];
+    then
+        echo "Too many files matching"
+        echo $toreplace
+        return 1
+    fi
+    echo "Replacing $toreplace with $1"
+    cp $1 $toreplace
+}

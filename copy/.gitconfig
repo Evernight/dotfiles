@@ -43,7 +43,8 @@
     ###### Merging ######
     mt = mergetool
 
-    okay = !git checkout --ours $@ && git add $@
+    okay = "!f() { git checkout --ours \"$1\" && git add \"$1\"; }; f"
+    mine = "!f() { git checkout --theirs \"$1\" && git add \"$1\"; }; f"
 
     reco = rebase --continue
 
@@ -62,14 +63,18 @@
     di = "!f() { git diff -r HEAD~1 $1; }; f"
 
 	# View abbreviated SHA, description, and history graph
-    slog = log --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    oldslog = log --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    slog = "!f() { git log --all --graph --date=format:'%y/%m/%d %H:%M:%S' --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s\n%Cgreen%cr (%cd) %C(bold blue)<%an>%Creset\n' --abbrev-commit `git reflog --pretty=format:'%h' | head -n 20 | tr '\n' ' '`; }; f"
+    eslog = "!f() { git log --all --graph --stat --date=format:'%y/%m/%d %H:%M:%S' --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s\n%Cgreen%cr (%cd) %C(bold blue)<%an>%Creset\n' --abbrev-commit `git reflog --pretty=format:'%h' | head -n 20 | tr '\n' ' '`; }; f"
     l = !git --no-pager log --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative -n 50
+    rlog = reflog --date=iso
 
 
     ###### Manipulating commits ######
     
     # rebase last commit on master
     chop = rebase --onto origin/master HEAD~1 HEAD
+    here = "!f() { git rebase --onto HEAD \"$1\"~1 $1; }; f"
 
     ###### Misc ######
 
@@ -77,6 +82,11 @@
     # http://stackoverflow.com/questions/11269256/how-to-name-and-retrieve-a-stash-by-name-in-git
     sshow = "!f() { git stash show stash^{/$*} -p; }; f"
     sapply = "!f() { git stash apply stash^{/$*}; }; f"
+
+    # Ignore files
+    skip = update-index --skip-worktree
+    noskip = update-index --no-skip-worktree
+    skipped = "!f() { git ls-files -v | grep \"^S \"; }; f"
 
     ###### Unused ######
 	# Show the diff between the latest commit and the current state
