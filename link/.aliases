@@ -11,6 +11,11 @@ alias vgd="~/dotfiles/bin/vimdiffgit.sh"
 
 # Usage: ls -1 | xgs "hg log %% | tail -n 4"
 #alias xgs="xargs -d'\n' -I %% sh -c "
+
+function sed() {
+    gsed $@
+}
+
 function xgs() {
     command="$@";
     xargs -d'\n' -I %% sh -c $command;
@@ -316,6 +321,28 @@ function gitblamediff() {
     diff -u $prev $cur
 }
 
-alias sch='NAME=$(date +%Y%m%d%H%M%S) && mkdir -p /Users/$USER/screenshots && adb shell screencap -p | perl -pe "s/\x0D\x0A/\x0A/g" > "/Users/$USER/screenshots/$NAME.png" && convert -crop 1280x1440+0x0 "/Users/$USER/screenshots/$NAME.png" "/Users/$USER/screenshots/$NAME.png"'
+#alias sch='NAME=$(date +%Y%m%d%H%M%S) && mkdir -p /Users/$USER/screenshots && adb shell screencap -p | perl -pe "s/\x0D\x0A/\x0A/g" > "/Users/$USER/screenshots/$NAME.png" && convert -crop 1280x1440+0x0 "/Users/$USER/screenshots/$NAME.png" "/Users/$USER/screenshots/$NAME.png"'
 
 alias wudo="cygstart --action=runas "
+
+alias rdh='adb logcat -c && yarn gulp vrshell:run:react -- --hot 1 --dev 1 --chrome 1 --webby 1 --app'
+
+alias sch='NAME=$(date +%Y%m%d%H%M%S) && adb shell screencap -p | perl -pe "s/\x0D\x0A/\x0A/g" > "/Users/$USER/screenshots/$NAME.png" && convert -crop 1280x1440+0x0 "/Users/$USER/screenshots/$NAME.png" "/Users/$USER/screenshots/$NAME.png"'
+
+up() {
+  local directory="$PWD"
+  local slashes="${directory//[^\/]/}"
+  for (( n=${#slashes}; n > 0; --n )); do
+    directory="${directory%/*}"
+    if [[ -e "$directory/package.json" ||
+          -d "$directory/.git" ||
+          -d "$directory/.hg" ]]; then
+      cd "$directory" && return
+    fi
+  done
+}
+
+systracerooms() {
+  /Users/slowbro/fbsource/fbandroid/scripts/fbsystrace/fbsystrace -e 172.16.167.98:5555 -b 5120 -t 15 -o $1 -a com.oculus.rooms --no-clear-tags gfx view sched --fb-categories react_apps react_cxx_bridge react_java_bridge react_js_bridge react_js_infra react_view --no-kill --no-launch --no-drop-pagecache --droidinfo
+}
+

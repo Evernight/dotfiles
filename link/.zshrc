@@ -1,6 +1,11 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
+#source $HOME/dotfiles/external/antigen/antigen.zsh
+#antigen use oh-my-zsh
+
+#antigen-bundle Tarrasch/zsh-bd
+
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
@@ -102,6 +107,9 @@ zstyle ':filter-select' case-insensitive yes # enable case-insensitive
 zstyle ':filter-select' extended-search yes 
 zstyle ':filter-select' hist-find-no-dups yes
 #zstyle ':filter-select' escape-descriptions yes
+
+export NVM_DIR="$HOME/.nvm"
+. "/usr/local/opt/nvm/nvm.sh"
 
 source $HOME/.aliases
 source $HOME/.aliases_local

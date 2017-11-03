@@ -1,12 +1,34 @@
-[alias]
-s = status
-
 [ui]
+# name and email, e.g.
+# username = Jane Doe <jdoe@example.com>
+username = Vasily Medyanikov
 merge = vimdiff
 
 [extensions]
-record=
+# uncomment these lines to enable some popular extensions
+# (see "hg help extensions" for more info)
+progress =
+color =
+
+[color]
+custom.hash = red
+custom.bookmark = yellow
+custom.time = green
+custom.user = blue
 
 [merge-tools]
-vimdiff.executable = vim
+vimdiff.executable = vimdiff
 vimdiff.args = -d $base $local $output $other +close +close
+
+[alias]
+burn = !hg revert -a && hg purge
+new = commit -m
+s = status
+sl = slog --template "{label('custom.hash',node|short)} \033[0;33m{branches}{bookmarks}{tags}\033[0m {desc|firstline}\n{label('custom.time', date|age)} ({label('custom.time', date|isodate)) {label('custom.user', author|person)}\n\n"
+om = up master
+dr = status --rev .^::.
+get = pull -u
+reco = rebase --continue
+okay = resolve -t internal:local 
+di = diff -r .^
+chop = rebase -d master -s 
