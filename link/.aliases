@@ -16,23 +16,24 @@ function xgs() {
     xargs -d'\n' -I %% sh -c $command;
 }
 
+# Find file containing $1 somewhere in name in current folder
 function _fs() {
     find . -iname "*$1*";
 }
-
-function fsf() {
-    _fs $@ | xgs readlink -f %%
-}
-
 alias fs='noglob _fs '
 
+# Like above but get the absolute path instead of relative
+function _fsf() {
+    _fs $@ | xgs readlink -f %%
+}
+alias fsf='noglob _fsf '
+
+# quickly grep in current folder
 function gs() {
-    #find . -type f -exec egrep your_text  {} \;
     egrep -irI "$@" .;
 }
 
 function gsb() {
-    #find . -type f -exec egrep your_text  {} \;
     egrep -ir "$@" .;
 }
 
@@ -81,7 +82,9 @@ if [[ $SHELL == "/bin/bash" ]] then
     alias ls="gls --color=auto"
 fi
 
-# Android development
+## Android development
+
+# Run before starting app on the phone. Cleans up the log and starts capturing them until interrupted with Ctrl+C
 function lcpre() {  
     trap 'echo "stopped writing logs";' INT;
     fname=`date "+$1%Y-%m-%d_%H:%M:%S.logcat"`; 
@@ -95,11 +98,13 @@ function lcpre() {
     open "$fname"
 }
 
+# Clean logcat
 function lcclean() {
     best_device=`adb_best_device`
     adb -s $best_device logcat -c;
 }
 
+# Quickly capture logcat, save into a file and open with Sublime
 function lcpost() {
     best_device=`adb_best_device`
     echo "Grabbing the logs";
@@ -110,10 +115,12 @@ function lcpost() {
     cygstart "$fname"
 }
 
+# Fix logcat files in format that does not support Sublime highlighting
 function fixlc() {
     cat $1 | sed -E 's/(\S+?)\s+(\S+?)\s+(\S+?)\s+\S+?\s+(\S+?)\s+(\S+?)\s*: (.*)/\1 \2 \4\/\5\t(\3): \6/' > out.logcat && open out.logcat
 }
 
+# If the phone connected both locally and remotely, get local one
 function adb_best_device() {
     remote=`adb devices | sed -n 's/\([0-9\.]*:[0-9]\+\).*/\1/p'`
     local=`adb devices | sed -nr 's/^([0-9a-zA-Z]+)\s+device$/\1/p'`
@@ -131,15 +138,17 @@ function adb_best_device() {
     return 1
 }
 
-function adbdis() {
-    adb disconnect
-}
-
+# Connect to the phone over wi-fi
 function adbcon() {
     adbdis;
     ip=`adb shell ifconfig wlan0 | grep 'inet addr' | sed 's/.*inet addr:\([0-9\.]*\).*/\1/'`
     adb tcpip 5555 &&
     adb connect $ip:5555
+}
+
+# Disconnect from the phone wi-fi
+function adbdis() {
+    adb disconnect
 }
 
 function adbcondev() {
@@ -157,6 +166,15 @@ function adbconall() {
     for device in $local_devices; do 
         adbcondev $device;
     done
+}
+
+# Run Rooms on the device
+function rrooms() {
+    best_device=$2;
+    if [[ -z "$best_device" ]]; then
+        best_device=`adb_best_device`;
+    fi
+    adb -s $best_device shell am force-stop com.oculus.rooms && adb -s $best_device shell am start -n com.oculus.rooms/com.oculus.rooms.RoomsActivity
 }
 
 # Windows
@@ -199,7 +217,9 @@ function so() {
     fi
 }
 
-alias cpar="cp --parent -r"
+function cpar() {
+   cp --parent -r $@
+}
 
 # ZSH global aliases
 alias -g OM=origin/master
@@ -208,6 +228,7 @@ alias magick='/cygdrive/c/Program\ Files/ImageMagick-7.0.5-Q16/magick.exe'
 alias inrooms='adb shell am force-stop com.oculus.horizon && adb shell am force-stop com.oculus.home && adb uninstall com.oculus.rooms && adb install -r '
 alias lastrooms='inrooms /home/slowbro/oculus-social-hub/Main/Temp/StagingArea/Package.apk'
 
+# Replace corresponding oackage on the phone with the given apk. No bullshit errors.
 function adbreplace() {
     best_device=$2;
     if [[ -z "$best_device" ]]; then
@@ -238,6 +259,7 @@ function adbstopall() {
     done
 }
 
+# Get package name and version from the apk file
 function apkver() {
     package=$(aapt dump badging "$1" | awk '/package/{gsub("name=|'"'"'","");  print $2}')
     version=$(aapt dump badging "$1" | awk '/package/{gsub("versionName=|'"'"'","");  print $4}')
@@ -248,10 +270,12 @@ function apkver() {
 function adbfresh() {
     latest=$( ls -t *.apk | head -1 );
     echo "Latest file is $latest"
+    ls -laF ${colorflag} $latest
     adbreplace $latest;
     lcclean;
 }
 
+# Given .meta file, find all prefabs in current folder referencing the corresponding script/item
 function metaref() {
     filename=$1
     if ! [[ -e $1 ]];
@@ -283,3 +307,15 @@ function replacefile() {
     echo "Replacing $toreplace with $1"
     cp $1 $toreplace
 }
+
+function gitblamediff() {
+    prev=$(mktemp /tmp/git-blame-prev.XXXXXX)
+    cur=$(mktemp /tmp/git-blame-cur.XXXXXX)
+    git blame --date=short -c $1 $2 | sed -re 's/[0-9]+\)//g' | grep $3 > $prev
+    git blame --date=short -c HEAD $2 | sed -re 's/[0-9]+\)//g' | grep $3 > $cur
+    diff -u $prev $cur
+}
+
+alias sch='NAME=$(date +%Y%m%d%H%M%S) && mkdir -p /Users/$USER/screenshots && adb shell screencap -p | perl -pe "s/\x0D\x0A/\x0A/g" > "/Users/$USER/screenshots/$NAME.png" && convert -crop 1280x1440+0x0 "/Users/$USER/screenshots/$NAME.png" "/Users/$USER/screenshots/$NAME.png"'
+
+alias wudo="cygstart --action=runas "
