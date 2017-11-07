@@ -160,18 +160,18 @@ prompt_second_line() {
 }
 
 ## Main prompt
-build_prompt() {
+build_prompt1() {
   RETVAL=$?
   echo ""
   prompt_status
-  prompt_virtualenv
-  prompt_context
+  #prompt_virtualenv
+  #prompt_context
   prompt_dir
-  prompt_git
-  prompt_hg
+  #prompt_git
+  #prompt_hg
   prompt_end
   prompt_second_line
 }
 
-PROMPT='%{%f%b%k%}$(build_prompt) '
+PROMPT='%{%f%b%k%}$(build_prompt1) '
 #PROMPT='%{%f%b%k%}%{$fg[green]%}%n@%m%{$reset_color%} $(build_prompt) '

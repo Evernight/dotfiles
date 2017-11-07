@@ -12,9 +12,10 @@ alias vgd="~/dotfiles/bin/vimdiffgit.sh"
 # Usage: ls -1 | xgs "hg log %% | tail -n 4"
 #alias xgs="xargs -d'\n' -I %% sh -c "
 
-function sed() {
-    gsed $@
-}
+# Mac-only
+#function sed() {
+#    gsed $@
+#}
 
 function xgs() {
     command="$@";

@@ -23,7 +23,7 @@ vimdiff.args = -d $base $local $output $other +close +close
 [alias]
 burn = !hg revert -a && hg purge
 new = commit -m
-s = status
+s = !hg status | git-status-color.sh
 sl = slog --template "{label('custom.hash',node|short)} \033[0;33m{branches}{bookmarks}{tags}\033[0m {desc|firstline}\n{label('custom.time', date|age)} ({label('custom.time', date|isodate)) {label('custom.user', author|person)}\n\n"
 om = up master
 dr = status --rev .^::.

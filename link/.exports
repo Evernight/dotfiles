@@ -29,27 +29,27 @@ export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 export NPM_PACKAGES="${HOME}/.npm-packages"
 
 # Mac
-export ANDROID_SDK=/Users/slowbro/Library/Android/sdk
-export ANDROID_NDK=/Users/slowbro/Library/Android/android-ndk-r12b/
+#export ANDROID_SDK=/Users/slowbro/Library/Android/sdk
+#export ANDROID_NDK=/Users/slowbro/Library/Android/android-ndk-r12b/
 #export ANDROID_HOME=${ANDROID_SDK}
 #export PATH=${PATH}:${ANDROID_SDK}/tools:${ANDROID_SDK}/platform-tools
-export JAVA_HOME=$(/usr/libexec/java_home)
+#export JAVA_HOME=$(/usr/libexec/java_home)
 
 # Windows 
-#export JAVA_HOME=/cygdrive/c/Program\ Files/Java/jdk1.7.0_79/
-#export JAVA_HOME=/cygdrive/c/Program\ Files/Java/jdk1.8.0_102/
-#export ANDROID_SDK=/cygdrive/c/Users/slowbro/AppData/Local/Android/Sdk
-#export ANDROID_SDK=C\:\\Users\\slowbro\\AppData\\Local\\Android\\Sdk
+export JAVA_HOME=/cygdrive/c/Program\ Files/Java/jdk1.7.0_79/
+export JAVA_HOME=/cygdrive/c/Program\ Files/Java/jdk1.8.0_102/
+export ANDROID_SDK=/cygdrive/c/Users/slowbro/AppData/Local/Android/Sdk
+export ANDROID_SDK=C\:\\Users\\slowbro\\AppData\\Local\\Android\\Sdk
 
 #export ANDROID_NDK=/cygdrive/c/Libraries/android-ndk-r12b
 #export ANDROID_NDK="C:\\Libraries\\android-ndk-r10e\\ndk-build.cmd"
-export ANDROID_NDK_REPOSITORY=/opt/android_ndk
+#export ANDROID_NDK_REPOSITORY=/opt/android_ndk
 
 export ANDROID_HOME=${ANDROID_SDK}
 
 # aapt.exe
-#export PATH=${PATH}:/cygdrive/c/Users/slowbro/AppData/Local/Android/sdk/build-tools/23.0.3
-export PATH=${PATH}:/Users/slowbro/Library/Android/sdk/build-tools/23.0.2/
+export PATH=${PATH}:/cygdrive/c/Users/slowbro/AppData/Local/Android/sdk/build-tools/23.0.3
+#export PATH=${PATH}:/Users/slowbro/Library/Android/sdk/build-tools/23.0.2/
 
 # yarn
 export PATH=${PATH}:/cygdrive/c/Program\ Files\ \(x86\)/Yarn/bin
