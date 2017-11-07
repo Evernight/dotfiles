@@ -202,7 +202,7 @@ function runonargs() {
 }
 
 # fpp 
-alias fpp=~/dotfiles/external/PathPicker/fpp
+#alias fpp=~/dotfiles/external/PathPicker/fpp
 
 #function so() {
 #    if [ $# -eq 0 ];
@@ -345,4 +345,6 @@ up() {
 systracerooms() {
   /Users/slowbro/fbsource/fbandroid/scripts/fbsystrace/fbsystrace -e 172.16.167.98:5555 -b 5120 -t 15 -o $1 -a com.oculus.rooms --no-clear-tags gfx view sched --fb-categories react_apps react_cxx_bridge react_java_bridge react_js_bridge react_js_infra react_view --no-kill --no-launch --no-drop-pagecache --droidinfo
 }
+
+alias pick='sh -c "$(fc -ln | tail -n 1)" | fpp -ai'
 
