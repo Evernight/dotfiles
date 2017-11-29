@@ -9,9 +9,13 @@ do
     then printf "\e[33m ${i:0:1}\e[0m ${i:2}\n"
     elif [[ ${i:0:1} == "D" ]] #grep -q "^D" <<< "$i"
     then printf "\e[31m ${i:0:1}\e[0m ${i:2}\n"
+    elif [[ ${i:0:1} == "R" ]] #grep -q "^D" <<< "$i"
+    then printf "\e[31m ${i:0:1}\e[0m ${i:2}\n"
     elif [[ ${i:0:1} == "A" ]] #grep -q "^A" <<< "$i"
     then printf "\e[32m ${i:0:1}\e[0m ${i:2}\n"
     elif [[ ${i:0:1} == "?" ]] #grep -q "^A" <<< "$i"
+    then printf "\e[34m ${i:0:1}\e[0m ${i:2}\n"
+    elif [[ ${i:0:1} == "!" ]] #grep -q "^A" <<< "$i"
     then printf "\e[34m ${i:0:1}\e[0m ${i:2}\n"
     else printf "$i\n"
     fi

@@ -8,6 +8,7 @@
 
     # Pull
     get = pull --rebase origin master
+    fresh = "!f() { git burn && git om && git get; }; f"
 
     ###### Navigation ######
     
@@ -68,7 +69,9 @@
     eslog = "!f() { git log --all --graph --stat --date=format:'%y/%m/%d %H:%M:%S' --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s\n%Cgreen%cr (%cd) %C(bold blue)<%an>%Creset\n' --abbrev-commit `git reflog --pretty=format:'%h' | head -n 20 | tr '\n' ' '`; }; f"
     l = !git --no-pager log --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative -n 50
     rlog = reflog --date=iso
+    sl = !git slog
 
+    desc = !git --no-pager show --stat
 
     ###### Manipulating commits ######
     

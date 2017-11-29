@@ -1,14 +1,21 @@
 [ui]
-# name and email, e.g.
-# username = Jane Doe <jdoe@example.com>
-username = Vasily Medyanikov
-merge = vimdiff
+merge = sh vimdiff-hg.sh
+interactive = true
+slash = true
+
+[merge-tools]
+vimdiffwin.executable = sh vimdiff-hg.sh
+vimdiffwin.args = $output $local $other $base
+vimdiffwin.premerge = keep
+#vimdiff.executable = vimdiff
+#vimdiff.args = -d $base $local $output $other +close +close
 
 [extensions]
 # uncomment these lines to enable some popular extensions
 # (see "hg help extensions" for more info)
 progress =
 color =
+pager =
 
 [color]
 custom.hash = red
@@ -16,19 +23,38 @@ custom.bookmark = yellow
 custom.time = green
 custom.user = blue
 
-[merge-tools]
-vimdiff.executable = vimdiff
-vimdiff.args = -d $base $local $output $other +close +close
+status.modified = blue bold underline red_background
+status.added = green bold
+status.removed = red bold blue_background
+status.deleted = cyan bold underline
+status.unknown = magenta bold underline
+status.ignored = black bold
+
+diff.diffline = bold
+diff.extended = cyan bold
+diff.file_a = red bold
+diff.file_b = green bold
+diff.hunk = magenta
+diff.deleted = red
+diff.inserted = green
+diff.changed = white
+diff.trailingwhitespace = bold red_background
 
 [alias]
 burn = !hg revert -a && hg purge
 new = commit -m
-s = !hg status | git-status-color.sh
-sl = slog --template "{label('custom.hash',node|short)} \033[0;33m{branches}{bookmarks}{tags}\033[0m {desc|firstline}\n{label('custom.time', date|age)} ({label('custom.time', date|isodate)) {label('custom.user', author|person)}\n\n"
+s = !hg status | sed 's/\\\\/\\//g' | sh git-status-color.sh
+slsimple = !hg slog --template "{label('custom.hash',node|short)} \033[0;33m{branches}{bookmarks}{tags}\033[0m {desc|firstline}\n{label('custom.time', date|age)} ({label('custom.time', date|isodate)) {label('custom.user', author|person)}\n\n"
+sl = !tmux split-window -h 'sh hg-slog.sh'
 om = up master
-dr = status --rev .^::.
-get = pull -u
+dr = !hg status --rev .~1 | sed 's/\\\\/\\//g' | sh git-status-color.sh
+drplain = !hg status --rev .~1::.
+get = pull --rebase
 reco = rebase --continue
 okay = resolve -t internal:local 
-di = diff -r .^
+di = !hg diff -r .~1 | less
 chop = rebase -d master -s 
+rrev = revert -r .^
+mt = resolve --all
+desc = show --stat
+co = revert -r 

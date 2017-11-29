@@ -129,7 +129,7 @@ function fixlc() {
 # If the phone connected both locally and remotely, get local one
 function adb_best_device() {
     remote=`adb devices | sed -n 's/\([0-9\.]*:[0-9]\+\).*/\1/p'`
-    local=`adb devices | sed -nr 's/^([0-9a-zA-Z]+)\s+device$/\1/p'`
+    local=`adb devices | sed -nr 's/^([0-9a-zA-Z]+)\s+device.*/\1/p'`
     if [[ -n $local && -n $remote ]] then
        echo "Both local ($local) and remote ($remote) connected" >&2
     fi
@@ -243,6 +243,7 @@ function adbreplace() {
     package=$(aapt dump badging $1 | awk '/package/{gsub("name=|'"'"'","");  print $2}')
     echo "Package: $package"
     echo "Uninstalling"
+    echo "adb -s $best_device uninstall $package"
     adb -s $best_device uninstall $package &&
     adb -s $best_device install $1 | awk 1 ORS='\r' &&
     echo "                                                                                   " &&
@@ -349,3 +350,19 @@ systracerooms() {
 
 alias pick='sh -c "$(fc -ln | tail -n 1)" | fpp -ai'
 
+hgsl() {
+    hg slog --hidden --rev "$(sh hg-reflog-line.sh)|.~5::." --template "{label('custom.hash',node|short)} \033[0;33m{branches}{bookmarks}{tags}\033[0m {desc|firstline}\n{label('custom.time', date|age)} ({label('custom.time', date|isodate)) {label('custom.user', author|person)}\n\n" | less
+}
+
+alias hgtyp='hg rrev Main/Assets/Activities/VideoWatching/Resources/Materials/ Main/ProjectSettings/ Main/Assets/Activities/Tabletop/Resources/Materials/TableMaterials/PodiumFlash.mat'
+
+tp() {
+    tmux split-window -h "$@"
+}
+
+tess() {
+    temp_file=$(mktemp)
+    echo $temp_file
+    cat > $temp_file
+    tmux split-window -h "cat $temp_file | less; rm $temp_file"
+}
