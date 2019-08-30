@@ -81,6 +81,8 @@ alias ardi='arc diff --allow-untracked '
 alias ardio='arc diff --allow-untracked --only '
 alias ardip='arc diff --allow-untracked --prepare '
 
+alias jefson='jf s -s -n'
+
 if [[ $SHELL == "/bin/bash" ]] then
     # Ctrl+G to delete last word from the filepath
     bind '"\C-g": unix-filename-rubout'
@@ -245,7 +247,7 @@ function adbreplace() {
     echo "Uninstalling"
     echo "adb -s $best_device uninstall $package"
     adb -s $best_device uninstall $package &&
-    adb -s $best_device install $1 | awk 1 ORS='\r' &&
+    adb -s $best_device install -r $1 | awk 1 ORS='\r' &&
     echo "                                                                                   " &&
     echo "Success!"
 }
@@ -329,7 +331,9 @@ alias wudo="cygstart --action=runas "
 
 alias rdh='adb logcat -c && yarn gulp vrshell:run:react -- --hot 1 --dev 1 --chrome 1 --webby 1 --app'
 
-alias sch='NAME=$(date +%Y%m%d%H%M%S) && adb shell screencap -p | perl -pe "s/\x0D\x0A/\x0A/g" > "/Users/$USER/screenshots/$NAME.png" && convert -crop 1280x1440+0x0 "/Users/$USER/screenshots/$NAME.png" "/Users/$USER/screenshots/$NAME.png"'
+#alias sch='NAME=$(date +%Y%m%d%H%M%S) && adb shell screencap -p | perl -pe "s/\x0D\x0A/\x0A/g" > "/Users/$USER/screenshots/$NAME.png" && convert -crop 1280x1440+0x0 "/Users/$USER/screenshots/$NAME.png" "/Users/$USER/screenshots/$NAME.png"'
+
+alias sch='NAME=$(date +%Y%m%d%H%M%S) && adb shell screencap -p | perl -pe "s/\x0D\x0A/\x0A/g" > "/home/slowbro/screenshots/$NAME.png" && convert -crop 1280x1440+0x0 "/Users/$USER/screenshots/$NAME.png" "/Users/$USER/screenshots/$NAME.png"'
 
 up() {
   local directory="$PWD"

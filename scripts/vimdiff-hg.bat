@@ -1,0 +1,1 @@
+sh vimdiff-hg.sh %*

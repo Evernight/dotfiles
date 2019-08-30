@@ -41,7 +41,8 @@ export JAVA_HOME=/cygdrive/c/Program\ Files/Java/jdk1.8.0_102/
 export ANDROID_SDK=/cygdrive/c/Users/slowbro/AppData/Local/Android/Sdk
 export ANDROID_SDK=C\:\\Users\\slowbro\\AppData\\Local\\Android\\Sdk
 
-#export ANDROID_NDK=/cygdrive/c/Libraries/android-ndk-r12b
+export ANDROID_NDK=/cygdrive/c/Libraries/android-ndk-r15c
+export ANDROID_NDK_HOME=$ANDROID_NDK
 #export ANDROID_NDK="C:\\Libraries\\android-ndk-r10e\\ndk-build.cmd"
 #export ANDROID_NDK_REPOSITORY=/opt/android_ndk
 
