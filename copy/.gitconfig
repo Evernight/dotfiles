@@ -173,3 +173,5 @@
 	trustExitCode = true
 [gc]
 	auto = 256
+[credential]
+    helper = manager

@@ -9,6 +9,17 @@ vimdiffwin.args = $output $local $other $base
 vimdiffwin.premerge = keep
 #vimdiff.executable = vimdiff
 #vimdiff.args = -d $base $local $output $other +close +close
+unityyamlmerge.executable = unity-yaml-merge-report.bat
+unityyamlmerge.args = merge -p --force $base $other $local $output
+unityyamlmerge.checkprompt = True
+unityyamlmerge.premerge = False
+unityyamlmerge.binary = False
+
+[merge-patterns]
+**.unity = unityyamlmerge
+**.prefab = unityyamlmerge
+**.asset = internal:fail
+**.exr = internal:fail
 
 [extensions]
 # uncomment these lines to enable some popular extensions
@@ -16,6 +27,13 @@ vimdiffwin.premerge = keep
 progress =
 color =
 pager =
+# enable extdiff extension (Extended Diff)
+hgext.extdiff =
+
+#[extdiff]
+# configure extended diff to use colordiff (requires colordiff installed in your system)
+#cmd.cdiff = colordiff.bat
+#opts.cdiff = -uprN
 
 [color]
 custom.hash = red
@@ -40,21 +58,28 @@ diff.inserted = green
 diff.changed = white
 diff.trailingwhitespace = bold red_background
 
+[lfs]
+threshold = 10M
+
 [alias]
 burn = !hg revert -a && hg purge
 new = commit -m
 s = !hg status | sed 's/\\\\/\\//g' | sh git-status-color.sh
 slsimple = !hg slog --template "{label('custom.hash',node|short)} \033[0;33m{branches}{bookmarks}{tags}\033[0m {desc|firstline}\n{label('custom.time', date|age)} ({label('custom.time', date|isodate)) {label('custom.user', author|person)}\n\n"
-sl = !tmux split-window -h 'sh hg-slog.sh'
+sl = !tmux split-window -h -d 'sh hg-slog.sh'
+rl = !tmux split-window -h -d 'sh hg-friendly-reflog.sh'
 om = up master
 dr = !hg status --rev .~1 | sed 's/\\\\/\\//g' | sh git-status-color.sh
 drplain = !hg status --rev .~1::.
 get = pull --rebase
 reco = rebase --continue
 okay = resolve -t internal:local 
+mine = resolve -t internal:other
 di = !hg diff -r .~1 | less
 chop = rebase -d master -s 
 rrev = revert -r .^
 mt = resolve --all
 desc = show --stat
 co = revert -r 
+baget = !hg burn && hg om && hg get
+camen = 'commit --amend'
